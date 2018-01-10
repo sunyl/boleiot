@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:include="/common/common_head::head(登录)"></head>
+<body class="login">
+<div class="content">
+    <div class="logo">
+        <img th:src="@{metronic/pages/img/logo1.png}"/>
+    </div>
+    <form class="login-form" action="/sunny/user/loginCheck" method="post">
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Username</label>
+            <input class="form-control form-control-solid placeholder-no-fix"
+                   type="text" autocomplete="off" placeholder="用户名" name="name"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label visible-ie8 visible-ie9">Password</label>
+            <input class="form-control form-control-solid placeholder-no-fix"
+                   type="password" autocomplete="off" placeholder="密码" name="password"/>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn green btn-block uppercase">登录</button>
+        </div>
+    </form>
+
+    <div class="copyright">2018 © Boleiot</div>
+</div>
+</body>
+
+</html>

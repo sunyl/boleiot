@@ -7,9 +7,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    @RequestMapping("/home")
-    public String index(Model model) {
-        return "index";
-    }
-
 }

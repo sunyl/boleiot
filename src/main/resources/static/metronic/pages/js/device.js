@@ -108,29 +108,54 @@ function table_department() {
     });
 }
 
-function addDept() {
-    if ($('#name').val() == "") {
-        alert("部门名称不能为空");
+function addDevice() {
+    if ($('#no').val() == "") {
+        alert("设备编号不能为空");
         return;
-
+    }
+    if ($('#password').val() == "") {
+        alert("密码不能为空");
+        return;
+    }
+    if ($('#name').val() == "") {
+        alert("设备名称不能为空");
+        return;
     }
     var str = {
+        "no": $('#no').val(),
+        "password": $('#password').val(),
         "name": $('#name').val(),
-        "remark": $('#remark').val()
+        "over_time": $('#over_time').val(),
+        "comments": $('#desc').val(),
+        "address": $('#address').val()
     };
     $.ajax({
         type: "POST",
-        url: "/sunny/dept/deptAddAction",
+        url: "/boleiot/device/add",
         data: JSON.stringify(str),
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
         success: function (data) {
             alert("添加成功！");
-            $('#name').val("");
-            $('#remark').val("");
         },
         error: function (data) {
             alert("添加失败！");
         }
     });
+}
+
+function getDeviceNo() {
+    var no;
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: "/boleiot/device/getNo",
+        dataType: 'json',
+        success: function (data) {
+            no = data.data;
+        },
+        error: function (data) {
+        }
+    });
+    return no;
 }

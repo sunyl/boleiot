@@ -15,4 +15,16 @@ public class PageController {
     public String index() {
         return "index";
     }
+
+    @RequestMapping("/add_terminal")
+    public String addTerminal() {
+        System.out.println("--->page add_terminal");
+        return "fragments/add_terminal";
+    }
+
+    @RequestMapping("/home")
+    public String home() {
+        System.out.println("--->page home");
+        return "fragments/home";
+    }
 }

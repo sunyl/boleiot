@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:include="/common/common_head::head(登录)"></head>
+
 <body class="login">
 <div class="content">
-    <div class="logo">
+    <div class="panel text-center">
         <img th:src="@{metronic/pages/img/logo1.png}"/>
     </div>
     <form class="login-form" action="/sunny/user/loginCheck" method="post">

@@ -1,39 +1,54 @@
-<div class="page-content">
+<div class="page-content" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="page-bar">
         <ul class="page-breadcrumb">
-            <li><a href="">用户管理</a> <i class="fa fa-circle"></i>
+            <li><a href="">设备管理</a> <i class="fa fa-circle"></i>
             </li>
-            <li><span>添加用户</span></li>
+            <li><span>创建设备</span></li>
         </ul>
     </div>
-    <div class=" row margin-top-20">
-        <label class="col-sm-1 control-label" for="username">用户名:</label>
-        <div class="col-sm-4">
-            <input class="form-control input-sm" id="username" type="text"
-                   name="username" placeholder="用户名"/>
+    <div class="well">
+        <div class="input-group col-lg-8">
+            <span class="input-group-addon">设备编号</span>
+            <input type="text" class="form-control" id="no" name="no"/>
+            <span class="input-group-addon">NB模块请填写IMEI码</span>
         </div>
-        <label class="col-sm-1 control-label" for="status">状态:</label>
-        <div class="col-sm-4">
-            <input class="form-control input-sm" id="status" type="number" name="status" placeholder="初始状态"/>
+        <div class="input-group col-lg-8 margin-top-20">
+            <span class="input-group-addon" for="password">通信密码</span>
+            <input type="text" class="form-control" id="password" name="password" placeholder="UDP和TCP协议接入时需要携带密码"/>
+            <span class="input-group-addon">六位数通信密码</span>
         </div>
-    </div>
-    <div class="row margin-top-20">
-        <label class="col-sm-1 control-label" for="loginname">登录名:</label>
-        <div class="col-sm-4">
-            <input class="form-control input-sm" id="loginname" type="text"
-                   name="loginname" placeholder="登录名"/>
+
+        <div class="input-group col-lg-8 margin-top-20">
+            <span class="input-group-addon">设备名称</span>
+            <input type="text" class="form-control" id="name" name="name" placeholder="给设备取个名字"/>
         </div>
-        <label class="col-sm-1 control-label" for="password">密码:</label>
-        <div class="col-sm-4">
-            <input class="form-control input-sm" id="password" type="password"
-                   name="password" placeholder="登录密码"/>
+
+        <div class="input-group col-lg-8 margin-top-20">
+            <span class="input-group-addon">过期时间</span>
+            <input type="text" class="form-control" id="over_time" name="over_time" placeholder="默认为0秒（永不过期）"/>
+            <span class="input-group-addon">单位：秒</span>
+        </div>
+        <div class="input-group col-lg-8 margin-top-20">
+            <span class="input-group-addon">设备描述</span>
+            <input class="form-control" id="desc" type="text" name="desc" placeholder="说点啥吧"/>
+        </div>
+        <div class="input-group col-lg-8 margin-top-20">
+            <span class="input-group-addon">地理位置</span>
+            <input class="form-control" id="address" type="text" name="address" placeholder="请输入设备位置"/>
+        </div>
+
+        <div class="raw margin-top-20">
+            <button type="button" class="btn btn-primary" id="btn_submit">提 交</button>
         </div>
     </div>
 
-    <div class="raw margin-top-20">
-        <div class="col-sm-offset-1">
-            <button type="submit" class="btn btn-default" id="btn_submit">提 交</button>
-        </div>
-    </div>
-
+    <script th:src="@{metronic/pages/js/device.js}"/>
+    <script>
+        $(document).ready(function () {
+            $("#no").val(getDeviceNo());
+            $('#btn_submit').click(function () {
+                addDevice();
+            });
+        });
+    </script>
 </div>

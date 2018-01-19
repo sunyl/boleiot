@@ -6,6 +6,8 @@ import com.boleiot.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeviceServiceImpl implements DeviceService {
 
@@ -15,5 +17,30 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public int addDevice(Device device) {
         return deviceMapper.insert(device);
+    }
+
+    @Override
+    public List<Device> getDeviceListByPage(int start, int limit, String keyword) {
+        return deviceMapper.getDeviceListByPage(start, limit, keyword);
+    }
+
+    @Override
+    public int getCount(String keyword) {
+        return deviceMapper.getCount(keyword);
+    }
+
+    @Override
+    public int activate(String no, String password, String hostname, int port) {
+        return deviceMapper.activate(no, password, hostname, port);
+    }
+
+    @Override
+    public Device selectByHostNameAndPort(String hostname, int port) {
+        return deviceMapper.selectByHostNameAndPort(hostname, port);
+    }
+
+    @Override
+    public Device selectByNo(String no) {
+        return deviceMapper.selectByNo(no);
     }
 }

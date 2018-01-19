@@ -1,0 +1,129 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml" class="page-content">
+    <script th:src="@{metronic/pages/js/sockjs.min.js}"/>
+    <script th:src="@{metronic/pages/js/stomp.min.js}"/>
+    <div class="page-bar" style="margin-left: 8px">
+        <ul class="page-breadcrumb">
+            <li><a>数据调试</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <div class="panel panel-primary" style="height: 450px; overflow-y: scroll; overflow: auto" id="messageWindow">
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <input type="text" class="form-control" placeholder="说点什么吧" id="message"/>
+            </div>
+            <div class="col-xs-3 col-md-2">
+                <button class="btn btn-primary btn-block" id="send" onclick="sendMessage();"><span
+                        class="glyphicon glyphicon-send"></span> 发送
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var stompClient = null;
+
+    $(function () {
+        connect();
+    });
+
+    function connect() {
+        var socket = new SockJS('/boleiot/boleiot-socket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/user/topic/response', function (data) {
+                console.log("response data = " + data);
+                showReceiveMessage(JSON.parse(data.body));
+            });
+        });
+    }
+
+    function disconnect() {
+        stompClient.disconnect();
+        console.log("Disconnected");
+    }
+
+    function sendMessage() {
+        var content = {
+            "name": "admin",
+            "no": "201801010110",
+            "type": "text",
+            "content": $("#message").val(),
+            "timestamp": new Date().getTime()
+        };
+        stompClient.send("/app/chat", {}, JSON.stringify(content));
+        $("#message").val("");
+        showSendMessage(content);
+    }
+
+    function showReceiveMessage(message) {
+        $("#messageWindow").append('<div class="message-div-left row">' +
+            '<div style="margin-left: 10px;margin-right: 80px;">' +
+            '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
+            '<div class="message-box-left">' + message.content + '</div></div></div><br/>'
+        );
+    }
+
+    function showSendMessage(message) {
+        $("#messageWindow").append('<div class="message-div-right row ">' +
+            '<div style="margin-right: 10px; margin-left:  80px;" class="pull-right">' +
+            '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
+            '<div class="message-box-right">' + message.content + '</div></div></div><br/>'
+        );
+    }
+
+    function formatTime(timestamp) {
+        var newDate = new Date();
+        newDate.setTime(timestamp);
+        return newDate.toLocaleString();
+    }
+</script>
+
+<style>
+    .message-box-left {
+        background-color: #0c66c7;
+        color: #FFFFFF;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+
+    .message-box-right {
+        float: right;
+        background-color: #555451;
+        color: #FFFFFF;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 5px 10px;
+    }
+
+    .user-name {
+        margin-bottom: 2px;
+        display: inline-block;
+    }
+
+    .user-date {
+        margin-bottom: 2px;
+        display: inline-block;
+        color: #ADADAD;
+    }
+
+    .message-div-left {
+        float: left;
+        margin-left: 5px;
+        width: 100%;
+        margin-bottom: 5px;
+        position: relative;
+    }
+
+    .message-div-right {
+        float: right;
+        margin-right: 5px;
+        width: 100%;
+        margin-bottom: 5px;
+        position: relative;
+    }
+</style>

@@ -9,13 +9,15 @@
     <div class="page-sidebar-wrapper">
         <div th:replace="common/sidebar :: sidebar"/>
     </div>
-    <div id="content" class="page-content-wrapper"></div>
+    <div id="content" class="page-content-wrapper">
+        <div th:replace="fragments/home :: home"/>
+    </div>
 </div>
 <div th:replace="common/footer :: footer"/>
 <div th:include="common/common_js :: common_js"></div>
 <script>
     $(document).ready(function () {
-        showAtRight('/boleiot/home');
+        //showAtRight('/boleiot/home');
     });
 </script>
 </body>

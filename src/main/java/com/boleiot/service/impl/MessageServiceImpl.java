@@ -14,23 +14,23 @@ public class MessageServiceImpl implements MessageService {
     private SimpMessagingTemplate template;
 
     @Override
-    public void sendMessage(String no, String name, String content) {
-        SocketMessage chatMessage = createMessage(name, content);
-        template.convertAndSendToUser(no, "/topic/response", JsonUtil.toJson(chatMessage));
+    public void sendMessage(String name, String no, String content) {
+        SocketMessage chatMessage = createMessage(name, no, content);
+        template.convertAndSendToUser("admin", "/topic/response", JsonUtil.toJson(chatMessage));
     }
 
     @Override
-    public void sendGroupMessage(String group, String content) {
-        SocketMessage message = createMessage("", content);
+    public void sendGroupMessage(String groupName, int groupId, String content) {
+        SocketMessage message = createMessage(groupName, String.valueOf(groupId), content);
         template.convertAndSend("/topic/response", JsonUtil.toJson(message));
     }
 
 
-    private SocketMessage createMessage(String name, String content) {
+    private SocketMessage createMessage(String name, String no, String content) {
         SocketMessage message = new SocketMessage();
         message.setName(name);
         message.setType("text");
-        message.setNo("000001");
+        message.setNo(no);
         message.setContent(content);
         message.setTimestamp(System.currentTimeMillis());
         return message;

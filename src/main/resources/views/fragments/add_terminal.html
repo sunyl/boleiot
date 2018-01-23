@@ -9,7 +9,7 @@
     <div class="well">
         <div class="input-group col-lg-8">
             <span class="input-group-addon">设备编号</span>
-            <input type="text" class="form-control" id="no" name="no"/>
+            <input type="text" class="form-control" id="no" name="no" maxlength="8"/>
             <span class="input-group-addon">NB模块请填写IMEI码</span>
         </div>
         <div class="input-group col-lg-8 margin-top-20">
@@ -43,9 +43,9 @@
     </div>
 
     <script th:src="@{metronic/pages/js/device.js}"/>
-    <script>
+    <script th:inline="javascript">
         $(document).ready(function () {
-            $("#no").val(getDeviceNo());
+            $('#no').val([[${no}]])
             $('#btn_submit').click(function () {
                 addDevice();
             });

@@ -34,22 +34,6 @@ function addDevice() {
     });
 }
 
-function getDeviceNo() {
-    var no;
-    $.ajax({
-        async: false,
-        type: "GET",
-        url: "/boleiot/device/getNo",
-        dataType: 'json',
-        success: function (data) {
-            no = data.data;
-        },
-        error: function (data) {
-        }
-    });
-    return no;
-}
-
 function getStatus(status) {
     if (status == null || status == 0) {
         return "<div><span class='label label-default'>离线</span></div>";
@@ -66,7 +50,7 @@ function getOverTime(overTime) {
 
 function terminal_list() {
 
-    var tables = $("#table-user").dataTable({
+    var tables = $("#table-terminal").dataTable({
         serverSide: true,// 分页，取数据等等的都放到服务端去
         processing: true,// 载入数据的时候是否显示“载入中”
         pageLength: 10,  // 首次加载的数据条数
@@ -110,7 +94,7 @@ function terminal_list() {
             {"data": 'name'},
             {"data": null, "width": "150px"},
             {"data": 'address'},
-            {"data": null, "width": "100px"}
+            {"data": null, "width": "120px"}
         ],
         // 操作按钮
         columnDefs: [
@@ -133,6 +117,7 @@ function terminal_list() {
             {
                 targets: -1,
                 defaultContent: "<div class='btn-group'>" +
+                "<button id='chatRow' class='btn btn-primary btn-sm' type='button'><i class='glyphicon glyphicon-comment'></i></button>" +
                 "<button id='editRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-edit'></i></button>" +
                 "<button id='delRow' class='btn btn-primary btn-sm' type='button'><i class='fa fa-trash-o'></i></button>" +
                 "</div>"
@@ -206,8 +191,15 @@ function terminal_list() {
         }
     });
 
+    //发信息
+    $("#table-terminal tbody").on("click", "#chatRow", function () {
+        var data = tables.api().row($(this).parents("tr")).data();
+        var url = "/boleiot/terminal_chat?no=" + data.no + "&name=" + data.name + "&password=" + data.password + "&address=" + data.address;
+        showAtRight(url)
+    });
+
     // 修改
-    $("#table-user tbody").on("click", "#editRow", function () {
+    $("#table-terminal tbody").on("click", "#editRow", function () {
         var data = tables.api().row($(this).parents("tr")).data();
         $("input[name=userName]").val(data.userName);
         $("input[name=loginName]").val(data.loginName);
@@ -241,17 +233,17 @@ function terminal_list() {
     });
 
     // 删除
-    $("#table-user tbody").on("click", "#delRow", function () {
+    $("#table-terminal tbody").on("click", "#delRow", function () {
         var data = tables.api().row($(this).parents("tr")).data();
-        if (confirm("是否确认删除这条信息?")) {
+        if (confirm("是否确认删除这条记录?")) {
             $.ajax({
-                url: "user/deleteUser/" + data.id,
+                url: "device/deleteDevice/" + data.no,
                 type: 'delete',
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
                 cache: "false",
                 success: function (data) {
-                    if (data) {
+                    if (data.status == 200) {
                         alert("删除成功");
                         tables.api().row().remove().draw(true);
                     } else {

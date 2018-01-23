@@ -7,7 +7,8 @@
         </ul>
     </div>
     <div class="col-md-8">
-        <div class="panel panel-primary" style="height: 450px; overflow-y: scroll; overflow: auto" id="messageWindow">
+        <div class="panel panel-primary" style="height: 450px; overflow-y: scroll; overflow: auto"
+             id="messageWindow">
         </div>
         <div class="row">
             <div class="col-md-10">
@@ -20,110 +21,136 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="col-md-4 panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                设备信息
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <span class="info-box-title">设备名称:</span>
+                <span class="info-box-title" th:text="${name}"></span>
+            </div>
+            <div class="row margin-top-10">
+                <span class="info-box-title">设备编号:</span>
+                <span class="info-box-title" th:text="${no}"></span>
+            </div>
+            <div class="row margin-top-10">
+                <span class="info-box-title">设备地址:</span>
+                <span class="info-box-title" th:text="${address}"></span>
+            </div>
+            <div class="row margin-top-10">
+                <span class="info-box-title">注册包:</span>
+                <span class="info-box-title" th:text="${register}">${registerCode}</span>
+            </div>
+        </div>
+    </div>
 
-<script>
-    var stompClient = null;
 
-    $(function () {
-        connect();
-    });
+    <script th:inline="javascript">
+        var stompClient = null;
 
-    function connect() {
-        var socket = new SockJS('/boleiot/boleiot-socket');
-        stompClient = Stomp.over(socket);
-        stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
-            stompClient.subscribe('/user/topic/response', function (data) {
-                console.log("response data = " + data);
-                showReceiveMessage(JSON.parse(data.body));
-            });
+        $(function () {
+            connect();
         });
-    }
 
-    function disconnect() {
-        stompClient.disconnect();
-        console.log("Disconnected");
-    }
+        function connect() {
+            var socket = new SockJS('/boleiot/boleiot-socket');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/user/topic/response', function (data) {
+                    console.log("response data = " + data);
+                    showReceiveMessage(JSON.parse(data.body));
+                });
+            });
+        }
 
-    function sendMessage() {
-        var content = {
-            "name": "admin",
-            "no": "201801010110",
-            "type": "text",
-            "content": $("#message").val(),
-            "timestamp": new Date().getTime()
-        };
-        stompClient.send("/app/chat", {}, JSON.stringify(content));
-        $("#message").val("");
-        showSendMessage(content);
-    }
+        function disconnect() {
+            stompClient.disconnect();
+            console.log("Disconnected");
+        }
 
-    function showReceiveMessage(message) {
-        $("#messageWindow").append('<div class="message-div-left row">' +
-            '<div style="margin-left: 10px;margin-right: 80px;">' +
-            '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
-            '<div class="message-box-left">' + message.content + '</div></div></div><br/>'
-        );
-    }
+        function sendMessage() {
+            var content = {
+                "name": "admin",
+                "no": [[${no}]],
+                "type": "text",
+                "content": $("#message").val(),
+                "timestamp": new Date().getTime()
+            };
+            stompClient.send("/app/chat", {}, JSON.stringify(content));
+            $("#message").val("");
+            showSendMessage(content);
+        }
 
-    function showSendMessage(message) {
-        $("#messageWindow").append('<div class="message-div-right row ">' +
-            '<div style="margin-right: 10px; margin-left:  80px;" class="pull-right">' +
-            '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
-            '<div class="message-box-right">' + message.content + '</div></div></div><br/>'
-        );
-    }
+        function showReceiveMessage(message) {
+            $("#messageWindow").append('<div class="message-div-left row">' +
+                '<div style="margin-left: 10px;margin-right: 80px;">' +
+                '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
+                '<div class="message-box-left">' + message.content + '</div></div></div><br/>'
+            );
+        }
 
-    function formatTime(timestamp) {
-        var newDate = new Date();
-        newDate.setTime(timestamp);
-        return newDate.toLocaleString();
-    }
-</script>
+        function showSendMessage(message) {
+            $("#messageWindow").append('<div class="message-div-right row ">' +
+                '<div style="margin-right: 10px; margin-left:  80px;" class="pull-right">' +
+                '<p class="user-name">' + message.name + '&nbsp;</p><p class="user-date">' + formatTime(message.timestamp) + '</p><br/>' +
+                '<div class="message-box-right">' + message.content + '</div></div></div><br/>'
+            );
+        }
 
-<style>
-    .message-box-left {
-        background-color: #0c66c7;
-        color: #FFFFFF;
-        border-radius: 3px;
-        display: inline-block;
-        padding: 5px 10px;
-    }
+        function formatTime(timestamp) {
+            var newDate = new Date();
+            newDate.setTime(timestamp);
+            return newDate.toLocaleString();
+        }
+    </script>
 
-    .message-box-right {
-        float: right;
-        background-color: #555451;
-        color: #FFFFFF;
-        border-radius: 3px;
-        display: inline-block;
-        padding: 5px 10px;
-    }
+    <style>
+        .message-box-left {
+            background-color: #0c66c7;
+            color: #FFFFFF;
+            border-radius: 3px;
+            display: inline-block;
+            padding: 5px 10px;
+        }
 
-    .user-name {
-        margin-bottom: 2px;
-        display: inline-block;
-    }
+        .message-box-right {
+            float: right;
+            background-color: #555451;
+            color: #FFFFFF;
+            border-radius: 3px;
+            display: inline-block;
+            padding: 5px 10px;
+        }
 
-    .user-date {
-        margin-bottom: 2px;
-        display: inline-block;
-        color: #ADADAD;
-    }
+        .user-name {
+            margin-bottom: 2px;
+            display: inline-block;
+        }
 
-    .message-div-left {
-        float: left;
-        margin-left: 5px;
-        width: 100%;
-        margin-bottom: 5px;
-        position: relative;
-    }
+        .user-date {
+            margin-bottom: 2px;
+            display: inline-block;
+            color: #ADADAD;
+        }
 
-    .message-div-right {
-        float: right;
-        margin-right: 5px;
-        width: 100%;
-        margin-bottom: 5px;
-        position: relative;
-    }
-</style>
+        .message-div-left {
+            float: left;
+            margin-left: 5px;
+            width: 100%;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .message-div-right {
+            float: right;
+            margin-right: 5px;
+            width: 100%;
+            margin-bottom: 5px;
+            position: relative;
+        }
+    </style>
+</div>

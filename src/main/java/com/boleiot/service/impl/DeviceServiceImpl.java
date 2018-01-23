@@ -43,4 +43,9 @@ public class DeviceServiceImpl implements DeviceService {
     public Device selectByNo(String no) {
         return deviceMapper.selectByNo(no);
     }
+
+    @Override
+    public int deleteDeviceByNo(String no) {
+        return deviceMapper.deleteDeviceByNo(no);
+    }
 }

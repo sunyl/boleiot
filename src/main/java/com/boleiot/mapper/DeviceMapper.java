@@ -12,6 +12,8 @@ public interface DeviceMapper {
 
     int deleteByPrimaryKey(Long id);
 
+    int deleteDeviceByNo(@Param("no") String no);
+
     int insert(Device record);
 
     int insertSelective(Device record);

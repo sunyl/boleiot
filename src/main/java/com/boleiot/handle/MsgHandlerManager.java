@@ -38,10 +38,12 @@ public class MsgHandlerManager {
 
     public void sendMessage(String id, String msg) {
         Channel channel = get(id);
-        String[] split = id.split(":");
-        String hostName = split[0];
-        int port = Integer.valueOf(split[1]);
-        channel.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8),
-                new InetSocketAddress(hostName, port)));
+        if (channel != null) {
+            String[] split = id.split(":");
+            String hostName = split[0];
+            int port = Integer.valueOf(split[1]);
+            channel.writeAndFlush(new DatagramPacket(Unpooled.copiedBuffer(msg, CharsetUtil.UTF_8),
+                    new InetSocketAddress(hostName, port)));
+        }
     }
 }

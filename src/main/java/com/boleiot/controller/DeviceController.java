@@ -7,6 +7,7 @@ import com.boleiot.utils.HttpResult;
 import com.boleiot.utils.JsonUtil;
 import com.boleiot.utils.UidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +28,9 @@ public class DeviceController {
 
     @RequestMapping(value = "/getNo", method = RequestMethod.GET)
     public String getDeviceNo() {
-        return JsonUtil.toJson(HttpResult.ok(UidUtil.getUUID()));
+        return JsonUtil.toJson(HttpResult.ok(UidUtil.getUUID_8()));
     }
+
     @RequestMapping(value = "/getDeviceList", method = RequestMethod.POST)
     public String getUserListAction(HttpServletRequest request) {
         int draw = request.getParameter("draw") == null ? 1 : Integer.valueOf(request.getParameter("draw"));
@@ -46,5 +48,15 @@ public class DeviceController {
         dataTable.setRecordsTotal(users.size());
         dataTable.setDraw(draw);
         return JsonUtil.toJson(dataTable);
+    }
+
+    @RequestMapping(value = "/deleteDevice/{no}", method = RequestMethod.DELETE)
+    public HttpResult deleteDevice(@PathVariable("no") String no) {
+        System.out.println("--->deleteDevice no = " + no);
+        int row = deviceService.deleteDeviceByNo(no);
+        if (row > 0) {
+            return new HttpResult(true);
+        }
+        return new HttpResult(201, "删除失败", "");
     }
 }

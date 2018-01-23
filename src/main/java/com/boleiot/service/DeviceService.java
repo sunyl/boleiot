@@ -17,4 +17,6 @@ public interface DeviceService {
     Device selectByHostNameAndPort(String hostname, int port);
 
     Device selectByNo(String no);
+
+    int deleteDeviceByNo(String no);
 }

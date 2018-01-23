@@ -31,7 +31,7 @@ public class UdpInBoundHandler extends SimpleChannelInboundHandler<DatagramPacke
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
-        String receiveMsg = packet.content().toString(CharsetUtil.UTF_8);
+        String receiveMsg = packet.content().toString(CharsetUtil.UTF_8).trim();
         InetSocketAddress socketAddress = packet.sender();
         String id = socketAddress.getAddress().getHostName() + ":" + socketAddress.getPort();
         MsgHandlerManager.get().put(id, ctx.channel());
@@ -56,13 +56,15 @@ public class UdpInBoundHandler extends SimpleChannelInboundHandler<DatagramPacke
             String[] split = data.replace("no=", "").replace("&pw=", "-").split("-");
             logger.info("activate: no = " + split[0] + " pw = " + split[1]);
             int row = deviceService.activate(split[0], split[1], hostname, port);
-            if (row > 0) {
-                MsgHandlerManager.get().sendMessage(id, "注册成功!");
-            }
+            MsgHandlerManager.get().sendMessage(id, row > 0 ? "注册成功!" : "注册失败!");
         } else {
             Device device = deviceService.selectByHostNameAndPort(hostname, port);
-            MessageService messageService = ApplicationContextHelper.getBean(MessageService.class);
-            messageService.sendMessage("admin", device.getName(), data);
+            if (device == null) {
+                MsgHandlerManager.get().sendMessage(id, "未知用户，请先注册!");
+            } else {
+                MessageService messageService = ApplicationContextHelper.getBean(MessageService.class);
+                messageService.sendMessage(device.getName(), device.getNo(), data);
+            }
         }
     }
 

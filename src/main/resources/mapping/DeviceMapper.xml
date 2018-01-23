@@ -25,6 +25,11 @@
         from t_device
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <delete id="deleteDeviceByNo">
+        delete from t_device
+        where no = #{no}
+    </delete>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_device
     where id = #{id,jdbcType=BIGINT}
@@ -198,14 +203,14 @@
         where no = #{no} and password = #{password}
     </update>
 
-    <select id="selectByHostNameAndPort"  resultMap="BaseResultMap">
+    <select id="selectByHostNameAndPort" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_device
-        where hostname = #{hostname} and  port = #{port}
+        where hostname = #{hostname} and port = #{port}
     </select>
 
-    <select id="selectByNo"  resultMap="BaseResultMap">
+    <select id="selectByNo" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_device

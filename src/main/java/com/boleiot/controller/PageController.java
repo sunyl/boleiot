@@ -1,6 +1,8 @@
 package com.boleiot.controller;
 
+import com.boleiot.service.DeviceService;
 import com.boleiot.utils.UidUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
+
+    @Autowired
+    private DeviceService deviceService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -27,7 +32,9 @@ public class PageController {
     }
 
     @RequestMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        int deviceCount = deviceService.getCount(null);
+        model.addAttribute("deviceCount", deviceCount);
         return "fragments/home";
     }
 

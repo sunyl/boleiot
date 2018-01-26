@@ -1,4 +1,4 @@
-<div class="page-header navbar" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+<div class="page-header navbar navbar-fixed-top" th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="page-header-inner">
         <div class="page-logo">
             <a href="###" onclick="showAtRight('/boleiot/home')">
@@ -23,7 +23,7 @@
                                     class="icon-lock"></i>修改个人信息</a>
                         </li>
                         <li>
-                            <a th:href="@{/logout}"> <i class="icon-key"></i> 注销</a>
+                            <a th:href="@{/user/logout}"> <i class="icon-key"></i> 注销</a>
                         </li>
                     </ul>
                 </li>

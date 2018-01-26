@@ -1,13 +1,11 @@
-package com.boleiot.model;
+package com.boleiot.model.user;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.boleiot.model.BaseModel;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-public class User extends BaseModel implements UserDetails {
+public class User extends BaseModel {
     private Integer id;
 
     private String name;
@@ -24,7 +22,15 @@ public class User extends BaseModel implements UserDetails {
 
     private String companyAddress;
 
-    private String role;
+    private Date createTime;
+
+    private Date lastLoginTime;
+
+    private String salt; //加密密码的盐
+
+    private int status;
+
+    private List<Role> roleList;
 
     public Integer getId() {
         return id;
@@ -42,46 +48,8 @@ public class User extends BaseModel implements UserDetails {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority(getRole()));
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     public void setPassword(String password) {
@@ -126,5 +94,49 @@ public class User extends BaseModel implements UserDetails {
 
     public void setCompanyAddress(String companyAddress) {
         this.companyAddress = companyAddress == null ? null : companyAddress.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getCredentialsSalt() {
+        return name + salt;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 }

@@ -1,37 +1,57 @@
 package com.boleiot.service.impl;
 
-import com.boleiot.model.User;
-import com.boleiot.sercurity.UserPrincipal;
+import com.boleiot.mapper.UserMapper;
+import com.boleiot.model.user.User;
 import com.boleiot.service.UserService;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import com.boleiot.utils.PasswordHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
-    private final static String ROLE_TAG = "USER";
-    private final static String USER_NAME = "admin";
-    private final static String USER_PWD = "123456";
+    private PasswordHelper passwordHelper = new PasswordHelper();
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = new User();
-        user.setName(USER_NAME);
-        user.setPassword(USER_PWD);
-        user.setRole(ROLE_TAG);
-        if (user == null) {
-            throw new UsernameNotFoundException("用户不存在");
-        }
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(ROLE_TAG));
-        UserPrincipal userPrincipal = new UserPrincipal(username, user.getPassword(), authorities);
-        return userPrincipal;
+    public User getUserByName(String name) {
+        return userMapper.getUserByName(name);
+    }
+
+    @Override
+    public int createUser(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public void changePassword(Integer userId, String newPassword) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        user.setPassword(newPassword);
+        passwordHelper.encryptPassword(user);
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public void correlationRoles(Integer userId, Integer... roleIds) {
+        userMapper.correlationRoles(userId, roleIds);
+    }
+
+    @Override
+    public void uncorrelationRoles(Integer userId, Integer... roleIds) {
+        userMapper.uncorrelationRoles(userId, roleIds);
+    }
+
+    @Override
+    public Set<String> findRoles(String username) {
+        return userMapper.findRoles(username);
+    }
+
+    @Override
+    public Set<String> findPermissions(String username) {
+        return userMapper.findPermissions(username);
     }
 }

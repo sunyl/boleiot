@@ -26,10 +26,10 @@ function addDevice() {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
         success: function (data) {
-            alert("添加成功！");
+            alert("添加成功!");
         },
         error: function (data) {
-            alert("添加失败！");
+            alert("添加失败!");
         }
     });
 }

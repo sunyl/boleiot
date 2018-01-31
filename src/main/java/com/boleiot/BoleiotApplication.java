@@ -13,7 +13,9 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 @EnableWebSocket
 @MapperScan("com.boleiot.mapper")
 public class BoleiotApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(BoleiotApplication.class, args);
     }
+
 }

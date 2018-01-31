@@ -8,10 +8,14 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class MyShiroRealm extends AuthorizingRealm {
+
+    private static final Logger log = LoggerFactory.getLogger(MyShiroRealm.class);
 
     @Autowired
     private UserService userService;
@@ -19,16 +23,15 @@ public class MyShiroRealm extends AuthorizingRealm {
     /**
      * 验证用户身份
      *
-     * @param authcToken
+     * @param token
      * @return
      * @throws AuthenticationException
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
-        UsernamePasswordToken utoken = (UsernamePasswordToken) authcToken;
-        String username = utoken.getUsername();
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        String username = (String) token.getPrincipal();
         User user = userService.getUserByName(username);
-        System.out.println("doGetAuthenticationInfo 验证用户身份 username = " + username);
+        log.info("doGetAuthenticationInfo 验证用户身份 username = " + username);
         if (null == user) {
             throw new UnknownAccountException();
         } else if (user.getStatus() == 0) {
@@ -48,7 +51,7 @@ public class MyShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) principals.getPrimaryPrincipal();
-        System.out.println("doGetAuthorizationInfo 授权 username = " + username);
+        log.info("doGetAuthorizationInfo 授权 username = " + username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userService.findRoles(username));
         authorizationInfo.setStringPermissions(userService.findPermissions(username));

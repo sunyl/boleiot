@@ -30,8 +30,6 @@ public class User extends BaseModel {
 
     private int status;
 
-    private List<Role> roleList;
-
     public Integer getId() {
         return id;
     }
@@ -132,11 +130,4 @@ public class User extends BaseModel {
         return name + salt;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
-    }
-
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
-    }
 }

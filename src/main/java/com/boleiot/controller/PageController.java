@@ -25,6 +25,11 @@ public class PageController {
         return "index";
     }
 
+    @RequestMapping("/403")
+    public String unauthorizedRole(){
+        return "403";
+    }
+
     @RequestMapping("/add_terminal")
     public String addTerminal(Model model) {
         model.addAttribute("no", UidUtil.getUUID_8());
@@ -41,6 +46,11 @@ public class PageController {
     @RequestMapping("/terminal_list")
     public String terminalList() {
         return "fragments/terminal_list";
+    }
+
+    @RequestMapping("/modif_password")
+    public String modifPassword() {
+        return "fragments/modif_password";
     }
 
     @RequestMapping(value = "/terminal_chat", method = RequestMethod.GET)

@@ -33,4 +33,6 @@ public interface DeviceMapper {
     Device selectByHostNameAndPort(@Param("hostname") String hostname, @Param("port") int port);
 
     Device selectByNo(@Param("no") String no);
+
+    int updateDevice(@Param("no") String no, @Param("name") String name, @Param("password") String password, @Param("over_time") Long over_time, @Param("address") String address);
 }

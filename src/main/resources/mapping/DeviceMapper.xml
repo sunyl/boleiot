@@ -216,4 +216,13 @@
         from t_device
         where no = #{no}
     </select>
+
+    <update id="updateDevice">
+        update t_device
+        set name = #{name},
+        password = #{password},
+        over_time = #{over_time},
+        address = #{address}
+        where no = #{no}
+    </update>
 </mapper>

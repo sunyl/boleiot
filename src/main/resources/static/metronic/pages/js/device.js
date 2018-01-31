@@ -201,35 +201,44 @@ function terminal_list() {
     // 修改
     $("#table-terminal tbody").on("click", "#editRow", function () {
         var data = tables.api().row($(this).parents("tr")).data();
-        $("input[name=userName]").val(data.userName);
-        $("input[name=loginName]").val(data.loginName);
-        $("input[name=status]").val(data.status);
+        $("input[name=no]").val(data.no);
+        $("input[name=name]").val(data.name);
         $("input[name=password]").val(data.password);
+        $("input[name=over_time]").val(data.overTime);
+        $("input[name=address]").val(data.address);
 
         $("#editModal").modal("show");
     });
 
     $("#btn-submit").on("click", function () {
-        alert("success");
-        /*$.ajax({
-          cache: false,
-          type: "POST",
-          url: url,
-          data:$("#editForm").serialize(),
-          async: false,
-          error: function(request) {
-        	  alert("Server Connection Error...");
-          },
-          success: function(data) {
-            if(data.status == 1){
+        if ($('#name').val() == "") {
+            alert("设备名称不能为空");
+            return;
+        }
+        if ($('#password').val() == "") {
+            alert("通讯密码不能为空");
+            return;
+        }
+        var str = {
+            "no": $('#no').val(),
+            "name": $('#name').val(),
+            "password": $('#password').val(),
+            "over_time": $('#over_time').val(),
+            "address": $('#address').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "/boleiot/device/updateDevice",
+            data: JSON.stringify(str),
+            dataType: 'json',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
                 $("#editModal").modal("hide");
-                alert("success");
-                tables.fnDraw();
-            }else{
-                alert("fail");
+                if (data.status != 200) {
+                    alert("修改失败" + data.msg);
+                }
             }
-          }
-      });*/
+        });
     });
 
     // 删除

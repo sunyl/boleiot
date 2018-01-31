@@ -48,4 +48,9 @@ public class DeviceServiceImpl implements DeviceService {
     public int deleteDeviceByNo(String no) {
         return deviceMapper.deleteDeviceByNo(no);
     }
+
+    @Override
+    public int updateDevice(String no, String name, String password, Long over_time, String address) {
+        return deviceMapper.updateDevice(no, name, password, over_time, address);
+    }
 }

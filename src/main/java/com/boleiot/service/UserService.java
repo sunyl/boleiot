@@ -23,10 +23,10 @@ public interface UserService {
     /**
      * 修改密码
      *
-     * @param userId
+     * @param username
      * @param newPassword
      */
-    void changePassword(Integer userId, String newPassword);
+    int changePassword(String username, String newPassword);
 
     /**
      * 添加用户-角色关系
@@ -60,4 +60,6 @@ public interface UserService {
      * @return
      */
     Set<String> findPermissions(String username);
+
+    int updateUser(User user);
 }

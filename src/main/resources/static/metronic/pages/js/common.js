@@ -38,3 +38,23 @@ function userLogin() {
         }
     });
 }
+
+function modifyPassword(password) {
+    var str = {
+        "password": password
+    };
+    $.ajax({
+        type: "POST",
+        url: "/boleiot/user/modifyPassword",
+        data: JSON.stringify(str),
+        dataType: 'json',
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (data.status == 200) {
+                alert("修改成功!");
+            } else {
+                alert("修改失败!");
+            }
+        }
+    });
+}

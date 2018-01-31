@@ -5,13 +5,15 @@ import com.boleiot.service.DeviceService;
 import com.boleiot.utils.DatatablesView;
 import com.boleiot.utils.HttpResult;
 import com.boleiot.utils.JsonUtil;
-import com.boleiot.utils.UidUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/device")
@@ -20,15 +22,11 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
+    @RequiresPermissions("device:add")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addDevice(@RequestBody Device device) {
         int row = deviceService.addDevice(device);
         return JsonUtil.toJson(row > 0 ? HttpResult.ok() : HttpResult.build(400, "添加设备失败"));
-    }
-
-    @RequestMapping(value = "/getNo", method = RequestMethod.GET)
-    public String getDeviceNo() {
-        return JsonUtil.toJson(HttpResult.ok(UidUtil.getUUID_8()));
     }
 
     @RequestMapping(value = "/getDeviceList", method = RequestMethod.POST)
@@ -58,5 +56,20 @@ public class DeviceController {
             return new HttpResult(true);
         }
         return new HttpResult(201, "删除失败", "");
+    }
+
+    @RequestMapping(value = "/updateDevice", method = RequestMethod.POST)
+    public HttpResult updateDevice(@RequestBody Map<String, Object> paramMap) {
+        String no = paramMap.get("no").toString();
+        String name = paramMap.get("name").toString();
+        String password = paramMap.get("password").toString();
+        String over_time = paramMap.get("over_time").toString();
+        String address = paramMap.get("address").toString();
+        Long time = StringUtils.isEmpty(over_time) ? 0 : Long.valueOf(over_time);
+        int row = deviceService.updateDevice(no, name, password, time, address);
+        if (row > 0) {
+            return HttpResult.ok();
+        }
+        return new HttpResult(202, "更新失败", "");
     }
 }

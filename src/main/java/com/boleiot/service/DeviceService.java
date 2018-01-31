@@ -19,4 +19,6 @@ public interface DeviceService {
     Device selectByNo(String no);
 
     int deleteDeviceByNo(String no);
+
+    int updateDevice(String no, String name, String password, Long over_time, String address);
 }

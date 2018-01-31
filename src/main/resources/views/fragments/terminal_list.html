@@ -62,7 +62,7 @@
                         &times;
                     </button>
                     <h4 class="modal-title" id="myModalLabel">
-                        修改用户信息
+                        修改设备信息
                     </h4>
                 </div>
 
@@ -70,23 +70,28 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <label class="col-sm-2 control-label" for="userName">用户名:</label>
-                            <input id="userName" name="userName" type="text" style="width: 250px" class="form-control"/>
+                            <label class="col-sm-2 control-label" for="no">设备编号:</label>
+                            <input id="no" name="no" type="text" style="width: 250px" class="form-control"
+                                   readonly="readonly"/>
+                        </tr>
+                        <tr>
+                            <label class="col-sm-2 control-label" for="name">设备名称:</label>
+                            <input id="name" name="name" type="text" style="width: 250px" class="form-control"/>
                         </tr>
 
                         <tr>
-                            <label class="col-sm-2 control-label" for="loginName">登录名:</label>
-                            <input id="loginName" name="loginName" type="text" style="width: 250px"
+                            <label class="col-sm-2 control-label" for="password">通讯密码:</label>
+                            <input id="password" name="password" type="text" style="width: 250px"
                                    class="form-control"/>
                         </tr>
                         <tr>
-                            <label class="col-sm-2 control-label" for="status">状态:</label>
-                            <input id="status" name="status"
-                                   type="text" style="width: 250px" class="form-control"/>
+                            <label class="col-sm-2 control-label" for="over_time">过期时间:</label>
+                            <input id="over_time" name="over_time"
+                                   type="number" style="width: 250px" class="form-control"/>
                         </tr>
                         <tr>
-                            <label class="col-sm-2 control-label" for="status">密码:</label>
-                            <input id="password" name="password"
+                            <label class="col-sm-2 control-label" for="address">位置:</label>
+                            <input id="address" name="address"
                                    type="text" style="width: 250px" class="form-control"/>
                         </tr>
                         </tbody>

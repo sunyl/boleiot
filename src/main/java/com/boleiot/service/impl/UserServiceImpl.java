@@ -28,11 +28,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Integer userId, String newPassword) {
-        User user = userMapper.selectByPrimaryKey(userId);
+    public int changePassword(String username, String newPassword) {
+        User user = userMapper.getUserByName(username);
         user.setPassword(newPassword);
         passwordHelper.encryptPassword(user);
-        userMapper.updateByPrimaryKeySelective(user);
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
@@ -53,5 +53,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> findPermissions(String username) {
         return userMapper.findPermissions(username);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
     }
 }

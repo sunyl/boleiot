@@ -13,9 +13,10 @@
         <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, name, password, phone, qq, company_name, company_url, company_address,last_login_time,create_time,status
+    id, name, password, phone, qq, company_name, company_url, company_address,last_login_time,create_time,status,salt
   </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
@@ -30,11 +31,11 @@
     <insert id="insert" parameterType="com.boleiot.model.user.User">
     insert into t_user (id, name, password, 
       phone, qq, company_name, 
-      company_url, company_address,last_login_time,create_time,status)
+      company_url, company_address,last_login_time,create_time,status,salt)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
       #{companyUrl,jdbcType=VARCHAR}, #{companyAddress,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP},
-      #{createTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER})
+      #{createTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER},#{salt,jdbcType=VARCHAR})
   </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="com.boleiot.model.user.User">
@@ -64,11 +65,14 @@
             <if test="lastLoginTime != null">
                 last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="companyAddress != null">
-                createTime = #{companyAddress,jdbcType=TIMESTAMP},
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="companyAddress != null">
-                status = #{companyAddress,jdbcType=INTEGER},
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}

@@ -1,5 +1,7 @@
 import com.boleiot.BoleiotApplication;
+import com.boleiot.model.Menu;
 import com.boleiot.service.DeviceService;
+import com.boleiot.service.MenuService;
 import com.boleiot.service.UserService;
 import com.boleiot.utils.UidUtil;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -11,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -20,6 +23,9 @@ public class MainTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MenuService menuService;
 
     @Test
     public void testUUID() {
@@ -48,5 +54,12 @@ public class MainTest {
             String str = it.next();
             System.out.println("role:" + str);
         }
+    }
+
+    @Test
+    public void testMenu() {
+        List<Menu> menus = menuService.getMenuList("");
+        List<Menu> treeMenu = Menu.createTreeMenus(menus);
+        System.out.println("meuns size  = " + menus.size());
     }
 }

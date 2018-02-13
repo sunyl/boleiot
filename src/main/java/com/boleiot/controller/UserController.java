@@ -1,9 +1,7 @@
 package com.boleiot.controller;
 
-import com.boleiot.model.user.User;
 import com.boleiot.service.UserService;
 import com.boleiot.utils.HttpResult;
-import com.boleiot.utils.PasswordHelper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -15,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
@@ -27,17 +24,11 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-    public HttpResult userLogin(@RequestBody Map<String, Object> paramMap, HttpSession session) {
+    public HttpResult userLogin(@RequestBody Map<String, Object> paramMap) {
         String username = paramMap.get("username").toString();
         String password = paramMap.get("password").toString();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
-
-        User user = new User();
-        user.setName("zhouxiaojun");
-        user.setPassword("123456");
-        new PasswordHelper().encryptPassword(user);
-        log.info("login password = " + user.getPassword() + " salt=" + user.getSalt());
         try {
             subject.login(token);
             return HttpResult.ok();

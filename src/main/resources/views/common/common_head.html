@@ -2,24 +2,22 @@
 <html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:fragment="head(title)">
     <title th:text="${title}"></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="overview &amp; stats"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="icon" type="image/png" th:href="@{template/images/icons/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{template/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{template/css/bootstrap-theme.min.css}"/>
+    <link th:href="@{template/layout/css/layout.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{template/layout/css/themes/darkblue.min.css}" rel="stylesheet" id="style_color"/>
+    <link th:href="@{template/layout/css/custom.min.css}" rel="stylesheet"/>
 
-    <link th:href="@{metronic/global/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/simple-line-icons/simple-line-icons.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css}" rel="stylesheet"/>
-
-    <link th:href="@{metronic/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/morris/morris.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/fullcalendar/fullcalendar.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/plugins/jqvmap/jqvmap/jqvmap.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/global/css/components.min.css}" rel="stylesheet" id="style_components"/>
-    <link th:href="@{metronic/global/css/plugins.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{metronic/layouts/layout/css/layout.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{metronic/layouts/layout/css/themes/darkblue.min.css}" rel="stylesheet" id="style_color"/>
-    <link th:href="@{metronic/layouts/layout/css/custom.min.css}" rel="stylesheet"/>
-    <link th:href="@{metronic/pages/css/login.css}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" th:href="@{template/plugins/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}"/>
+    <link rel="stylesheet" th:href="@{template/plugins/font-awesome/css/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{template/plugins/simple-line-icons/simple-line-icons.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{template/pages/css/login.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{template/pages/css/util.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{template/pages/css/login.css}"/>
 </head>
 </html>

@@ -12,37 +12,37 @@
             <input type="text" class="form-control" id="no" name="no" maxlength="8"/>
             <span class="input-group-addon">NB模块请填写IMEI码</span>
         </div>
-        <div class="input-group col-lg-8 margin-top-20">
+        <div class="input-group col-lg-8 p-t-10">
             <span class="input-group-addon" for="password">通信密码</span>
             <input type="text" class="form-control" id="password" name="password" placeholder="UDP和TCP协议接入时需要携带密码"/>
             <span class="input-group-addon">六位数通信密码</span>
         </div>
 
-        <div class="input-group col-lg-8 margin-top-20">
+        <div class="input-group col-lg-8 p-t-10">
             <span class="input-group-addon">设备名称</span>
             <input type="text" class="form-control" id="name" name="name" placeholder="给设备取个名字"/>
         </div>
 
-        <div class="input-group col-lg-8 margin-top-20">
+        <div class="input-group col-lg-8 p-t-10">
             <span class="input-group-addon">过期时间</span>
             <input type="number" class="form-control" id="over_time" name="over_time" placeholder="默认为0秒（永不过期）"/>
             <span class="input-group-addon">单位：秒</span>
         </div>
-        <div class="input-group col-lg-8 margin-top-20">
+        <div class="input-group col-lg-8 p-t-10">
             <span class="input-group-addon">设备描述</span>
             <input class="form-control" id="desc" type="text" name="desc" placeholder="描述"/>
         </div>
-        <div class="input-group col-lg-8 margin-top-20">
+        <div class="input-group col-lg-8 p-t-10">
             <span class="input-group-addon">地理位置</span>
             <input class="form-control" id="address" type="text" name="address" placeholder="请输入设备位置"/>
         </div>
 
-        <div class="raw margin-top-20">
+        <div class="raw p-t-10">
             <button type="button" class="btn btn-primary" id="btn_submit">提 交</button>
         </div>
     </div>
 
-    <script th:src="@{metronic/pages/js/device.js}"/>
+    <script th:src="@{template/pages/js/device.js}"/>
     <script th:inline="javascript">
         $(document).ready(function () {
             $('#no').val([[${no}]])

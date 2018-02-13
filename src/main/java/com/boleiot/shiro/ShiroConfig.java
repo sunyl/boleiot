@@ -22,7 +22,7 @@ public class ShiroConfig {
         //shiroFilterFactoryBean.setUnauthorizedUrl("/403");//这里设置403并不会起作用，参考http://www.jianshu.com/p/e03f5b54838c
         // 拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/metronic/**", "anon");
+        filterChainDefinitionMap.put("/template/**", "anon");
         filterChainDefinitionMap.put("/user/userLogin", "anon");
         filterChainDefinitionMap.put("/user/logout", "logout");
         // authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问

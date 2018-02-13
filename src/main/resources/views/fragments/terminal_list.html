@@ -8,7 +8,7 @@
         </div>
         <div class="portlet" id="div-table-container">
             <!-- 查询、添加、批量删除、导出、刷新 -->
-            <div class="row-fluid">
+            <div class="row-fluid p-t-20 p-b-20">
                 <div class="pull-right">
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary btn-sm" id="btn-add">
@@ -25,7 +25,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row margin-top-15">
+                <div class="row">
                     <form id="queryForm" action="" method="post">
                         <div class="col-xs-2">
                             <input type="text" id="keyword" name="keyword" class="form-control input-sm"/>
@@ -57,7 +57,7 @@
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header p-t-30">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
@@ -104,9 +104,9 @@
             </div>
         </div>
     </div>
-    <script th:src="@{metronic/pages/js/device.js}"/>
-    <script th:src="@{metronic/global/plugins/datatables/datatables.min.js}"/>
-    <script th:src="@{metronic/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js}"/>
+    <script th:src="@{template/pages/js/device.js}"/>
+    <script th:src="@{template/js/datatables.min.js}"/>
+    <script th:src="@{template/js/datatables.bootstrap.js}"/>
     <script>
         $(document).ready(function () {
             terminal_list();

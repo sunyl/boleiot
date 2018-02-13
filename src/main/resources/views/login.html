@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:include="common/common_head::head(登录)"></head>
+<head th:include="common/common_head::head(登录)">
+</head>
+<body>
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('template/images/bg-login.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+				<span class="login100-form-title p-b-41">
+					 <img th:src="@{template/pages/img/logo1.png}"/>
+				</span>
+            <div class="login100-form validate-form p-b-33 p-t-5">
 
-<body class="login">
-<div class="content">
-    <div class="panel text-center">
-        <img th:src="@{metronic/pages/img/logo1.png}"/>
+                <div class="wrap-input100 validate-input" data-validate="Enter username">
+                    <input id="username" class="input100" type="text" name="username" placeholder="用户名"/>
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <input id="password" class="input100" type="password" name="password" placeholder="密码"/>
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                </div>
+                <div class="m-l-20 p-t-20">
+                    <p id="error" class="text-danger"></p>
+                </div>
+                <div class="container-login100-form-btn m-t-32">
+                    <button class="login100-form-btn" onclick="userLogin()">
+                        登 录
+                    </button>
+                </div>
+
+            </div>
+        </div>
     </div>
-    <form class="login-form" id="loginForm">
-        <div class="form-group">
-            <input class="form-control form-control-solid placeholder-no-fix"
-                   type="text" autocomplete="off" placeholder="用户名" name="username" id="username"/>
-        </div>
-        <div class="form-group">
-            <input class="form-control form-control-solid placeholder-no-fix"
-                   type="password" autocomplete="off" placeholder="密码" name="password" id="password"/>
-        </div>
-        <div>
-            <p id="error" class="text-danger"></p>
-        </div>
-        <div class="form-actions">
-            <button type="button" class="btn green btn-block uppercase" onclick="userLogin()">登录</button>
-        </div>
-    </form>
+</div>
 
-    <div class="copyright">2018 © Boleiot</div>
-
-    <div th:include="common/common_js :: common_js"></div>
+<div id="dropDownSelect1"></div>
+<div th:include="common/common_js :: common_js">
 </div>
 </body>
 </html>

@@ -45,7 +45,7 @@
     <script th:src="@{template/pages/js/device.js}"/>
     <script th:inline="javascript">
         $(document).ready(function () {
-            $('#no').val([[${no}]])
+            $('#no').val([[${no}]]);
             $('#btn_submit').click(function () {
                 addDevice();
             });

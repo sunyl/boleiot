@@ -1,6 +1,7 @@
 package com.boleiot.controller;
 
 import com.boleiot.service.DeviceService;
+import com.boleiot.service.MenuService;
 import com.boleiot.utils.UidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ public class PageController {
 
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private MenuService menuService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -21,7 +24,8 @@ public class PageController {
     }
 
     @RequestMapping(value = {"/", "/index"})
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("menu", menuService.getMenuList("admin"));
         return "index";
     }
 

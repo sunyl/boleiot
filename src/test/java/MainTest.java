@@ -58,7 +58,7 @@ public class MainTest {
 
     @Test
     public void testMenu() {
-        List<Menu> menus = menuService.getMenuList("");
+        List<Menu> menus = menuService.getMenuList("admin");
         List<Menu> treeMenu = Menu.createTreeMenus(menus);
         System.out.println("meuns size  = " + menus.size());
     }

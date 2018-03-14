@@ -1,6 +1,4 @@
 <div xmlns:th="http://www.w3.org/1999/xhtml" class="page-content">
-    <script th:src="@{metronic/pages/js/sockjs.min.js}"/>
-    <script th:src="@{metronic/pages/js/stomp.min.js}"/>
     <div class="page-bar" style="margin-left: 8px">
         <ul class="page-breadcrumb">
             <li><a>数据调试</a></li>
@@ -15,8 +13,8 @@
                 <input type="text" class="form-control" placeholder="说点什么吧" id="message"/>
             </div>
             <div class="col-xs-3 col-md-2">
-                <button class="btn btn-primary btn-block" id="send" onclick="sendMessage();"><span
-                        class="glyphicon glyphicon-send"></span> 发送
+                <button class="btn btn-primary btn-block" id="send" onclick="sendMessage();">
+                    发送
                 </button>
             </div>
         </div>
@@ -47,11 +45,11 @@
         </div>
     </div>
 
-
+    <script th:src="@{template/pages/js/sockjs.min.js}"/>
+    <script th:src="@{template/pages/js/stomp.min.js}"/>
     <script th:inline="javascript">
         var stompClient = null;
-
-        $(function () {
+        $(document).ready(function () {
             connect();
         });
 

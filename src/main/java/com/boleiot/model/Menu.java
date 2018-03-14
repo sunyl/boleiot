@@ -11,6 +11,7 @@ public class Menu extends BaseModel {
     private int parentId;
     private int sort;
     private int state;
+    private String role;
 
     private List<Menu> children = new ArrayList<>();
 
@@ -129,5 +130,13 @@ public class Menu extends BaseModel {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

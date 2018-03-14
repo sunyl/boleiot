@@ -9,13 +9,15 @@
         <result column="parent_id" jdbcType="VARCHAR" property="parentId"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
         <result column="state" jdbcType="INTEGER" property="state"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, title, url, icon, parent_id, sort, state
+        id, title, url, icon, parent_id, sort, state,role
     </sql>
     <select id="getMenuList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from t_menu
+        where role = #{role}
     </select>
 </mapper>

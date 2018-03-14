@@ -194,8 +194,8 @@ function terminal_list() {
     //发信息
     $("#table-terminal tbody").on("click", "#chatRow", function () {
         var data = tables.api().row($(this).parents("tr")).data();
-        var url = "/boleiot/terminal_chat?no=" + data.no + "&name=" + data.name + "&password=" + data.password + "&address=" + data.address;
-        showAtRight(url)
+        var url = "/boleiot/terminal_chat?no=" + data.no + "&name=" + encodeURIComponent(data.name) + "&password=" + data.password + "&address=" + encodeURIComponent(data.address);
+        showAtRight(url);
     });
 
     // 修改

@@ -11,31 +11,24 @@ public class Menu extends BaseModel {
     private int parentId;
     private int sort;
     private int state;
-    private String role;
+    private int role;
 
     private List<Menu> children = new ArrayList<>();
 
     public void sortChildren() {
-        Collections.sort(children, new Comparator<Menu>() {
-            @Override
-            public int compare(Menu menu1, Menu menu2) {
-                int result = 0;
-
-                int ordby1 = menu1.getSort();
-                int ordby2 = menu2.getSort();
-
-                int id1 = menu1.getId();
-                int id2 = menu2.getId();
-                if (0 != ordby1 && 0 != ordby2) {
-                    result = (ordby1 < ordby2 ? -1 : (ordby1 == ordby2 ? 0 : 1));
-                } else {
-                    result = (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
-                }
-                return result;
+        Collections.sort(children, (Menu menu1, Menu menu2) -> {
+            int result = 0;
+            int ordby1 = menu1.getSort();
+            int ordby2 = menu2.getSort();
+            int id1 = menu1.getId();
+            int id2 = menu2.getId();
+            if (0 != ordby1 && 0 != ordby2) {
+                result = (ordby1 < ordby2 ? -1 : (ordby1 == ordby2 ? 0 : 1));
+            } else {
+                result = (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
             }
-
+            return result;
         });
-        // 对每个节点的下一层节点进行排序
         for (Iterator<Menu> it = children.iterator(); it.hasNext(); ) {
             it.next().sortChildren();
         }
@@ -58,7 +51,7 @@ public class Menu extends BaseModel {
             for (Menu menu : menus) {
                 dataMap.put(menu.getId(), menu);
             }
-            // 组装树形结构
+            // 树形结构
             Set<Map.Entry<Integer, Menu>> entrySet = dataMap.entrySet();
             for (Map.Entry<Integer, Menu> entry : entrySet) {
                 Menu menu = entry.getValue();
@@ -68,8 +61,6 @@ public class Menu extends BaseModel {
                     dataMap.get(menu.getParentId()).getChildren().add(menu);
                 }
             }
-
-            // 对树形结构进行二叉树排序
             root.sortChildren();
             treeMenus = root.getChildren();
         }
@@ -132,11 +123,11 @@ public class Menu extends BaseModel {
         this.state = state;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
     }
 }

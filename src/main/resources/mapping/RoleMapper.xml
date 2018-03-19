@@ -25,5 +25,10 @@
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
       )
   </insert>
-
+  <select id="getRoleByType"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_role
+    where type = #{type}
+  </select>
 </mapper>

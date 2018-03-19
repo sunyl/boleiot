@@ -17,4 +17,5 @@ public interface RoleMapper {
 
     void uncorrelationPermissions(Integer roleId, Integer... permissionIds);
 
+    Role getRoleByType(@Param("type")String type);
 }

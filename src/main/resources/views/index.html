@@ -15,8 +15,15 @@
 </div>
 <div th:replace="common/footer :: footer"/>
 <div th:include="common/common_js :: common_js"></div>
-<script>
+
+<script th:src="@{template/pages/js/sidebar-menu.js}"/>
+
+<script th:inline="javascript">
     $(document).ready(function () {
+        var data = [[${menu}]]
+        //var menusHtml = getMenuHtml(eval('(' + data + ')'));
+        var menusHtml = getMenuHtml(data);
+        $('#sidebar-menu').append(menusHtml);
         showAtRight('/boleiot/home');
     });
 </script>

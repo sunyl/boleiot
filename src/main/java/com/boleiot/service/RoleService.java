@@ -15,7 +15,7 @@ public interface RoleService {
      * @param roleId
      * @param permissionIds
      */
-    public void correlationPermissions(Integer roleId, Integer... permissionIds);
+    void correlationPermissions(Integer roleId, Integer... permissionIds);
 
     /**
      * 移除角色-权限之间关系
@@ -23,6 +23,7 @@ public interface RoleService {
      * @param roleId
      * @param permissionIds
      */
-    public void uncorrelationPermissions(Integer roleId, Integer... permissionIds);
+    void uncorrelationPermissions(Integer roleId, Integer... permissionIds);
 
+    Role getRoleByType(String role);
 }

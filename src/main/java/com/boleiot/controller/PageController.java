@@ -1,14 +1,23 @@
 package com.boleiot.controller;
 
+import com.boleiot.model.Menu;
+import com.boleiot.model.user.Role;
 import com.boleiot.service.DeviceService;
 import com.boleiot.service.MenuService;
+import com.boleiot.service.RoleService;
+import com.boleiot.service.UserService;
 import com.boleiot.utils.UidUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class PageController {
@@ -17,6 +26,10 @@ public class PageController {
     private DeviceService deviceService;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -25,12 +38,21 @@ public class PageController {
 
     @RequestMapping(value = {"/", "/index"})
     public String index(Model model) {
-        model.addAttribute("menu", menuService.getMenuList("admin"));
+        Set<String> roles = userService.findRoles(SecurityUtils.getSubject().getPrincipal().toString());
+        String roleType = "normal";
+        Iterator<String> iterator = roles.iterator();
+        if (iterator.hasNext()) {
+            roleType = iterator.next();
+        }
+        Role role = roleService.getRoleByType(roleType);
+        List<Menu> menus = menuService.getMenuList(role.getId());
+        List<Menu> treeMenu = Menu.createTreeMenus(menus);
+        model.addAttribute("menu", treeMenu);
         return "index";
     }
 
     @RequestMapping("/403")
-    public String unauthorizedRole(){
+    public String unauthorizedRole() {
         return "403";
     }
 

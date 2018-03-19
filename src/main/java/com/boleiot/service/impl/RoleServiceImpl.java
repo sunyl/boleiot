@@ -1,10 +1,10 @@
 package com.boleiot.service.impl;
 
-import com.boleiot.mapper.RoleMapper;
-import com.boleiot.model.user.Role;
-import com.boleiot.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+        import com.boleiot.mapper.RoleMapper;
+        import com.boleiot.model.user.Role;
+        import com.boleiot.service.RoleService;
+        import org.springframework.beans.factory.annotation.Autowired;
+        import org.springframework.stereotype.Service;
 
 
 @Service
@@ -40,6 +40,11 @@ public class RoleServiceImpl implements RoleService {
      */
     public void uncorrelationPermissions(Integer roleId, Integer... permissionIds) {
         roleMapper.uncorrelationPermissions(roleId, permissionIds);
+    }
+
+    @Override
+    public Role getRoleByType(String role) {
+        return roleMapper.getRoleByType(role);
     }
 
 }

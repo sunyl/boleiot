@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface MenuService {
 
-    List<Menu> getMenuList(String role);
+    List<Menu> getMenuList(Integer role);
 
 }

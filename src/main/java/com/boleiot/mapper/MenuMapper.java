@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface MenuMapper {
 
-    List<Menu> getMenuList(@Param("role") String role);
+    List<Menu> getMenuList(@Param("role") Integer role);
 }

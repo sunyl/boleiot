@@ -4,9 +4,7 @@ import com.boleiot.model.Device;
 import com.boleiot.service.DeviceService;
 import com.boleiot.utils.DatatablesView;
 import com.boleiot.utils.HttpResult;
-import com.boleiot.utils.JsonUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +22,16 @@ public class DeviceController {
 
     @RequiresPermissions("device:add")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addDevice(@RequestBody Device device) {
+    public HttpResult addDevice(@RequestBody Device device) {
         int row = deviceService.addDevice(device);
-        return JsonUtil.toJson(row > 0 ? HttpResult.ok() : HttpResult.build(400, "添加设备失败"));
+        if (row > 0) {
+            return HttpResult.ok();
+        }
+        return HttpResult.build(400, "添加设备失败");
     }
 
     @RequestMapping(value = "/getDeviceList", method = RequestMethod.POST)
-    public String getUserListAction(HttpServletRequest request) {
+    public DatatablesView<Device> getUserListAction(HttpServletRequest request) {
         int draw = request.getParameter("draw") == null ? 1 : Integer.valueOf(request.getParameter("draw"));
         int limit = request.getParameter("limit") == null ? 10 : Integer.valueOf(request.getParameter("limit"));
         int start = request.getParameter("start") == null ? 0 : Integer.valueOf(request.getParameter("start"));
@@ -45,7 +46,7 @@ public class DeviceController {
         dataTable.setRecordsFiltered(deviceService.getCount(search));
         dataTable.setRecordsTotal(users.size());
         dataTable.setDraw(draw);
-        return JsonUtil.toJson(dataTable);
+        return dataTable;
     }
 
     @RequestMapping(value = "/deleteDevice/{no}", method = RequestMethod.DELETE)

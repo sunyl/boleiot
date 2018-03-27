@@ -10,8 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoggerInterceptor implements HandlerInterceptor {
 
@@ -24,11 +25,11 @@ public class LoggerInterceptor implements HandlerInterceptor {
         LoggerEntity entity = new LoggerEntity();
         String sessionId = request.getRequestedSessionId();
         String url = request.getRequestURI();
-        String paramData = JsonUtil.toJson(request.getParameterMap());
+        Map<String, Object> param = getRequestParameter(request);
         entity.setClientIp(LoggerUtils.getCliectIp(request));
         entity.setMethod(request.getMethod());
         entity.setType(LoggerUtils.getRequestType(request));
-        entity.setParamData(paramData);
+        entity.setParamData(param);
         entity.setUri(url);
         entity.setSessionId(sessionId);
         entity.setTime(System.currentTimeMillis());
@@ -52,6 +53,30 @@ public class LoggerInterceptor implements HandlerInterceptor {
         entity.setReturnData("----");
         //存入数据库
         logger.info("LoggerEntity:" + JsonUtil.toJson(entity));
+    }
+
+    private Map<String, Object> getRequestParameter(HttpServletRequest request) {
+        if (null == request) {
+            return null;
+        }
+        String method = request.getMethod();
+        Map<String, Object> params = new HashMap<>();
+        if (method.equalsIgnoreCase("GET")) {
+            params.put("get_param", request.getQueryString());
+        } else {
+            params = getBodyData(request);
+        }
+        return params;
+    }
+
+    private Map<String, Object> getBodyData(HttpServletRequest request) {
+        Enumeration enu = request.getParameterNames();
+        Map<String, Object> params = new HashMap<>();
+        while (enu.hasMoreElements()) {
+            String paraName = (String) enu.nextElement();
+            params.put(paraName, request.getParameter(paraName));
+        }
+        return params;
     }
 
 }

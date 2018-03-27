@@ -1,5 +1,7 @@
 package com.boleiot.model;
 
+import java.util.Map;
+
 public class LoggerEntity extends BaseModel {
     private Long id;
     //客户端请求ip
@@ -11,7 +13,7 @@ public class LoggerEntity extends BaseModel {
     //请求方式method,post,get等
     private String method;
     //请求参数内容,json
-    private String paramData;
+    private Map<String, Object> paramData;
     //请求接口唯一session标识
     private String sessionId;
     //请求时间
@@ -64,11 +66,11 @@ public class LoggerEntity extends BaseModel {
         this.method = method;
     }
 
-    public String getParamData() {
+    public Map<String, Object> getParamData() {
         return paramData;
     }
 
-    public void setParamData(String paramData) {
+    public void setParamData(Map<String, Object> paramData) {
         this.paramData = paramData;
     }
 
